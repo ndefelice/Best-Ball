@@ -19,11 +19,11 @@ import Header from "@/components/header"
             the highest-scoring players are automatically inserted into the starting lineup spots.
             </AccordionContent>
             <AccordionContent>
-            There is no roster management in this format. That means the team a manager drafts will be their team for the entire season. You don't have
+            There is no roster management in this format. That means the team a manager drafts will be their team for the entire season. You don&apos;t have
             to worry about weekly waivers, trades, or setting lineups.
             </AccordionContent>
             <AccordionContent>
-            There is also no weekly matchups. The standings for each league are determined by your team's total points scored (PF).
+            There is also no weekly matchups. The standings for each league are determined by your team&apos;s total points scored (PF).
             </AccordionContent>
             <AccordionContent>
             In this torunament, teams are randomly placed in individual, 12 team leagues on Sleeper. At the end of the regular season (14 weeks), 
@@ -34,7 +34,7 @@ import Header from "@/components/header"
           <AccordionItem value="item-2">
             <AccordionTrigger><strong>Prize Pool</strong></AccordionTrigger>
             <AccordionContent>
-            This league is a <strong>$25 buy-in</strong>. If you don't pay by Week 4 of the NFL season (September 26th), you will be eliminated from the tournament.
+            This league is a <strong>$25 buy-in</strong>. If you don&apos;t pay by Week 4 of the NFL season (September 26th), you will be eliminated from the tournament.
             </AccordionContent>
             <AccordionContent>
               •  <strong>1st place:</strong> 70% of the prize pool

@@ -3,7 +3,8 @@ import styles from './page.module.scss';
 import Header from '../components/header';
 import StandingCol from '../components/standingCol';
 import React, { useEffect, useState } from 'react';
-import { calculateOverallStandings, fetchStandings } from '../api/sleeper';
+import { fetchLeagueStandings } from '../api/sleeper';
+import calculateOverallStandings from '../backend/standings/standings';
 import { Standing } from '../types/types';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { LeagueID } from '@/constants/constants';
@@ -16,10 +17,10 @@ export default function Home() {
   useEffect(() => {
     const fetchOverallStandings = async () => {
       try {
-        const standings1 = await fetchStandings(LeagueID.LEAGUE_1);
-        const standings2 = await fetchStandings(LeagueID.LEAGUE_2);
+        const standings1 = await fetchLeagueStandings(LeagueID.LEAGUE_1);
+        const standings2 = await fetchLeagueStandings(LeagueID.LEAGUE_2);
         //console.log(standings1);
-        const standings3 = await fetchStandings(LeagueID.LEAGUE_3);
+        const standings3 = await fetchLeagueStandings(LeagueID.LEAGUE_3);
 
         const overallStandings = await calculateOverallStandings(
           standings1,

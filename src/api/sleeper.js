@@ -44,7 +44,7 @@ async function fetchLeagueUsers(league_id) {
 
 // Collect the team points and display name, connect the data with
 // the owner ID, and sort the data by total points to create the standings.
-async function fetchStandings(league_id) {
+async function fetchLeagueStandings(league_id) {
   const teamPoints = fetchTeamPoints(league_id);
   const user_info = fetchLeagueUsers(league_id);
 
@@ -69,25 +69,17 @@ async function fetchStandings(league_id) {
   });
 }
 
-function calculateOverallStandings(league1, league2, league3) {
-  return Promise.all([league1, league2, league3]).then((values) => {
-    const overallStandings = values.flat();
-    overallStandings.sort((a, b) => b.totalPoints - a.totalPoints);
-
-    // Add overall rank to each team in overall standings
-    overallStandings.forEach((team, index) => {
-      team.ovrRank = index + 1;
-    });
-
-    console.log(overallStandings);
-    return overallStandings;
-  });
+async function fetchDraftResults(draft_id) {
+    try {
+        const response = await fetch(
+        `https://api.sleeper.app/v1/draft/${draft_id}/picks`,
+        );
+        const draftResults = await response.json();
+        console.log(draftResults);
+        return draftResults;
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-// const standings = calculateOverallStandings(
-//     fetchStandings("1129049799606558720"),
-//     fetchStandings("1129055384385323008"),
-//     fetchStandings("1129055515994148864")
-// );
-// console.log(standings);
-export { fetchStandings, calculateOverallStandings };
+export { fetchLeagueStandings };

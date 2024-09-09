@@ -5,9 +5,8 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <h1>
-        This is one of the many leagues pages. You can check certain
-        leagues&apos; teams/players.
+      <h1 className="text-center" style={{ fontSize: '26px' }}>
+        Draft Results
       </h1>
     </div>
   );

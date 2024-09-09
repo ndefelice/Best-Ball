@@ -1,5 +1,5 @@
 'use client';
-import { fetchStandings } from '@/api/sleeper';
+import { fetchLeagueStandings } from '../../api/sleeper';
 import styles from './page.module.scss';
 import Header from '@/components/header';
 import { LeagueID } from '@/constants/constants';
@@ -21,9 +21,9 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchLeagueStandings = async () => {
+    const fetchStandings = async (leagueValue: LeagueID) => {
       try {
-        const standings = await fetchStandings(leagueValue);
+        const standings = await fetchLeagueStandings(leagueValue);
         setLeagueStandings(standings);
       } catch (err) {
         console.error('Error fetching standings:', err);
@@ -32,8 +32,8 @@ export default function Home() {
         setLoading(false);
       }
     };
-
-    fetchLeagueStandings();
+  
+    fetchStandings(leagueValue);
   }, [leagueValue]);
 
   if (loading) {

@@ -8,7 +8,7 @@ function fetchPlayers() {
             const data = await response.json();
             const jsonData = JSON.stringify(data, null, 2);
             //console.log(jsonData);
-            writeFileSync('../../app/players.json', jsonData, { flag: 'w' });
+            writeFileSync('players.json', jsonData, { flag: 'w' });
         })
         .catch(error => console.error('Error fetching players:', error));
 }

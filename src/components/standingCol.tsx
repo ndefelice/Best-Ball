@@ -58,7 +58,23 @@ const StandingCol: React.FC<{ standings: Standing[] }> = ({ standings }) => {
                </div>
              </TableCell>
 
-             <TableCell>{standing.totalPoints}</TableCell>
+             <TableCell>
+             <div style={{ display: 'flex', alignItems: 'center' }}>
+              {standing.totalPoints}
+              <img
+              src={'favicon.ico'}
+              alt={`${standing.displayName}'s point increment`}
+              style={{
+                width: '15px',
+                height: '15px',
+                borderRadius: '50%',
+                marginRight: '10px',
+                marginLeft: '15px',
+              }}
+              />
+              {standing.totalPoints}
+              </div>
+              </TableCell>
            </TableRow>
          ))}
        </TableBody>

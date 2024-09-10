@@ -4,4 +4,5 @@ export type Standing = {
   displayName: string;
   totalPoints: number;
   userAvatar?: string;
+  pointsUpdate: number;
 };

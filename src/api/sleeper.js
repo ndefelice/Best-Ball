@@ -33,8 +33,15 @@ async function fetchLeagueUsers(league_id) {
     users.forEach((user) => {
       const userId = user.user_id;
       const displayName = user.display_name;
+      const userAvatar = user.avatar;
 
-      user_info[userId] = displayName;
+      // if we want to call for full image remove /thumbs
+      const userAvatarUrl = userAvatar ? `https://sleepercdn.com/avatars/thumbs/${userAvatar}` : null;
+
+      user_info[userId] = {
+        displayName: displayName,
+        avatarUrl: userAvatarUrl,
+      };
     });
     return user_info;
   } catch (error) {
@@ -44,9 +51,10 @@ async function fetchLeagueUsers(league_id) {
 
 // Collect the team points and display name, connect the data with
 // the owner ID, and sort the data by total points to create the standings.
+
 async function fetchLeagueStandings(league_id) {
-  const teamPoints = fetchTeamPoints(league_id);
-  const user_info = fetchLeagueUsers(league_id);
+  const teamPoints = await fetchTeamPoints(league_id);
+  const user_info = await fetchLeagueUsers(league_id);
 
   return Promise.all([teamPoints, user_info]).then((values) => {
     const teamPoints = values[0];
@@ -54,8 +62,9 @@ async function fetchLeagueStandings(league_id) {
     const standings = [];
 
     for (const [teamId, totalPoints] of Object.entries(teamPoints)) {
-      const displayName = user_info[teamId];
-      standings.push({ displayName, totalPoints });
+      const displayName = user_info[teamId]?.displayName;
+      const userAvatar = user_info[teamId]?.avatarUrl;
+      standings.push({ displayName, userAvatar, totalPoints });
     }
 
     standings.sort((a, b) => b.totalPoints - a.totalPoints);
@@ -68,6 +77,7 @@ async function fetchLeagueStandings(league_id) {
     return standings;
   });
 }
+
 
 async function fetchDraftResults(draft_id) {
     try {

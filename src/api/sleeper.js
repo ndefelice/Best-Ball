@@ -62,8 +62,8 @@ async function fetchLeagueStandings(league_id) {
     const standings = [];
 
     for (const [teamId, totalPoints] of Object.entries(teamPoints)) {
-      const displayName = user_info[teamId]?.displayName || "Unknown";
-      const userAvatar = user_info[teamId]?.avatarUrl || "Unkown";
+      const displayName = user_info[teamId]?.displayName;
+      const userAvatar = user_info[teamId]?.avatarUrl;
       standings.push({ displayName, userAvatar, totalPoints });
     }
 

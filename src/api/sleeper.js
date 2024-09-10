@@ -102,7 +102,7 @@ async function fetchUserAvatar(league_id){
       const displayName = user.display_name;
       const userAvatar = user.avatar;
 
-      const userAvatarUrl = userAvatar ? 'https://sleepercdn.com/avatars/thumbs/${userAvatarId}' : null; // null if user has no avatar
+      const userAvatarUrl = userAvatar ? `https://sleepercdn.com/avatars/thumbs/${userAvatarId}` : null; // null if user has no avatar
 
       user_info[userId] = {
         displayName: displayName,

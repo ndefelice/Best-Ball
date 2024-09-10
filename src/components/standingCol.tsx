@@ -42,7 +42,7 @@ const StandingCol: React.FC<{ standings: Standing[] }> = ({ standings }) => {
              <TableCell>
                <div style={{ display: 'flex', alignItems: 'center' }}>
                  <img
-                   src={standing.avatarUrl || 'https://sleepercdn.com/avatars/cc12ec49965eb7856f84d71cf85306af'}
+                   src={standing.userAvatar || 'https://sleepercdn.com/avatars/cc12ec49965eb7856f84d71cf85306af'}
                    alt={`${standing.displayName}'s avatar`}
                    style={{
                      width: '30px',

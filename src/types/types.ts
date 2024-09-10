@@ -3,5 +3,5 @@ export type Standing = {
   leagueRank?: number;
   displayName: string;
   totalPoints: number;
-  avatarUrl?: string;
+  userAvatar?: string;
 };

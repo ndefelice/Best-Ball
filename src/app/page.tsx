@@ -1,34 +1,28 @@
 'use client';
 import styles from './page.module.scss';
+import React, { useEffect, useState } from 'react';
+import '@blueprintjs/core/lib/css/blueprint.css';
+
 import Header from '../components/header';
 import StandingCol from '../components/standingCol';
-import React, { useEffect, useState } from 'react';
-import { fetchLeagueStandings } from '../api/sleeper';
-import calculateOverallStandings from '../backend/standings/standings';
-import { Standing } from '../types/types';
-import '@blueprintjs/core/lib/css/blueprint.css';
+
+import { fetchAllUsers, fetchUserByUserId } from '../api/users';
+
+import { User } from '../types/types';
+
 import { LeagueID } from '@/constants/constants';
 
 export default function Home() {
-  const [overallStandings, setOverallStandings] = useState<Standing[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchOverallStandings = async () => {
+    const fetchUsers = async () => {
       try {
-        const standings1 = await fetchLeagueStandings(LeagueID.LEAGUE_1);
-        const standings2 = await fetchLeagueStandings(LeagueID.LEAGUE_2);
-        //console.log(standings1);
-        const standings3 = await fetchLeagueStandings(LeagueID.LEAGUE_3);
-
-        const overallStandings = await calculateOverallStandings(
-          standings1,
-          standings2,
-          standings3,
-        );
-        //console.log(overallStandings);
-        setOverallStandings(overallStandings); // Corrected line
+        const users = await fetchAllUsers();
+        //console.log(users);
+        setUsers(users); // Corrected line
       } catch (err) {
         console.error('Error fetching standings:', err);
         setError('Failed to fetch standings');
@@ -37,7 +31,7 @@ export default function Home() {
       }
     };
 
-    fetchOverallStandings();
+    fetchUsers();
   }, []);
 
   if (loading) {
@@ -55,7 +49,7 @@ export default function Home() {
         Overall Standings
       </h1>
       <div className={styles.table}>
-        <StandingCol standings={overallStandings} />
+        <StandingCol standings={users} />
       </div>
     </div>
   );

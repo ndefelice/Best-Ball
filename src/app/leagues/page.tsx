@@ -1,12 +1,17 @@
 'use client';
-import { fetchLeagueStandings } from '../../api/sleeper';
 import styles from './page.module.scss';
-import Header from '@/components/header';
-import { LeagueID } from '@/constants/constants';
-import { SegmentedControl } from '@blueprintjs/core';
 import { useEffect, useState } from 'react';
-import { Standing } from '@/types/types';
+import { SegmentedControl } from '@blueprintjs/core';
+
+import Header from '@/components/header';
+
+import { LeagueID } from '@/constants/constants';
+
+import { User } from '@/types/types';
+
 import StandingCol from '@/components/standingCol';
+
+import { fetchUsersByLeagueID } from '../../api/users';
 
 const leagueOptions = [
   { label: 'League 1', value: LeagueID.LEAGUE_1 },
@@ -16,15 +21,15 @@ const leagueOptions = [
 
 export default function Home() {
   const [leagueValue, setLeagueValue] = useState<LeagueID>(LeagueID.LEAGUE_1);
-  const [leagueStandings, setLeagueStandings] = useState<Standing[]>([]);
+  const [leagueUsers, setLeagueUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchStandings = async (leagueValue: LeagueID) => {
+    const fetchLeagueUsers = async (leagueValue: LeagueID) => {
       try {
-        const standings = await fetchLeagueStandings(leagueValue);
-        setLeagueStandings(standings);
+        const leagueUsers = await fetchUsersByLeagueID(leagueValue);
+        setLeagueUsers(leagueUsers);
       } catch (err) {
         console.error('Error fetching standings:', err);
         setError('Failed to fetch standings');
@@ -33,7 +38,7 @@ export default function Home() {
       }
     };
   
-    fetchStandings(leagueValue);
+    fetchLeagueUsers(leagueValue);
   }, [leagueValue]);
 
   if (loading) {
@@ -54,7 +59,7 @@ export default function Home() {
           onValueChange={(value) => setLeagueValue(value as LeagueID)}
           defaultValue={leagueValue}
         />
-        <StandingCol standings={leagueStandings} />
+        <StandingCol standings={leagueUsers} />
       </div>
     </div>
   );

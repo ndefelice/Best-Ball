@@ -42,6 +42,15 @@ const Header: React.FC = () => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            <Link href="/rosters" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={`${navigationMenuTriggerStyle()} text-lg`}
+              >
+                Rosters
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link href="/draft" legacyBehavior passHref>
               <NavigationMenuLink
                 className={`${navigationMenuTriggerStyle()} text-lg`}

@@ -32,4 +32,25 @@ export type Player = {
   team?: string;
   position: string;
   status: string;
-}
+};
+
+export type UserAndRoster = {
+  displayName: string;
+  ovrRank?: number;
+  leagueRank?: number;
+  userAvatar?: string;
+  leagueId: string;
+  userId: string;
+  roster: string[];
+  totalPoints: number;
+  prevOvrRank?: number;
+  detailedRoster: Array<
+    Array<{
+      playerId: string;
+      playerName: string;
+      team?: string;
+      position: string;
+      status: string;
+    }>
+  >;
+};

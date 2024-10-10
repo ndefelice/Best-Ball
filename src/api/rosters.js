@@ -1,7 +1,7 @@
 import { fetchUsersByLeagueID } from './users'
 import { fetchPlayerById } from './players'
 
-const API_URL = 'https://best-ball-api-8nrw.onrender.com'; // Update with your server URL if deployed
+const API_URL = 'https://best-ball-api-docker.onrender.com'; // Update with your server URL if deployed
 
 export const fetchRostersByLeagueId = async (leagueId) => {
     try {

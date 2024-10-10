@@ -1,4 +1,4 @@
-const API_URL = 'https://best-ball-api-8nrw.onrender.com'; // Update with your server URL if deployed
+const API_URL = 'https://best-ball-api-docker.onrender.com'; // Update with your server URL if deployed
 
 export const fetchAllUsers = async () => {
     const response = await fetch(`${API_URL}/users`);

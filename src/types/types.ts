@@ -9,6 +9,19 @@ export type User = {
   totalPoints: number;
 };
 
+export type PlayoffUser = {
+  displayName: string;
+  ovrRank?: number;
+  userAvatar?: string;
+  leagueId: string;
+  userId: string;
+  roster: string[];
+  totalPoints: number;
+  regSznPoints: number;
+  eliminated: boolean;
+  competing_for_third: boolean;
+};
+
 export type Draft = {
   draftId: string;
   leagueId: string;

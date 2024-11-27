@@ -25,7 +25,6 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
     <Table>
       <TableHeader>
         <TableRow>
-          {hasOvrRank && <TableHead>Rank</TableHead>}
           <TableHead>Team</TableHead>
           <TableHead>Points</TableHead>
         </TableRow>
@@ -40,9 +39,6 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
                 : 'bg-gray-200'
             }
           >
-            {standing.ovrRank !== undefined && standing.ovrRank !== null && (
-              <TableCell>{standing.ovrRank}</TableCell>
-            )}
             <TableCell>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
@@ -71,32 +67,29 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
 
   return (
     <div className="flex flex-col items-center gap-4 mt-10">
-    {/* First Round */}
-    <div className="w-full">
-        <h2 className="text-center font-bold mb-2">Quarter Finals</h2>
-        {renderTable()}
-    </div>
+        {/* First Round */}
+        <div className="w-full">
+            <h2 className="text-center font-bold mb-2">Quarter Finals</h2>
+            {renderTable()}
+        </div>
 
-    {/* Second Round */}
-    <div className="w-full">
-        <h2 className="text-center font-bold mb-2">Semi Finals</h2>
-        <div className="text-center text-gray-500 font-medium">TBD</div>
-    </div>
+        {/* Second Round */}
+        <div className="w-full">
+            <h2 className="text-center font-bold mb-2">Semi Finals</h2>
+            <div className="text-center text-gray-500 font-medium">TBD</div>
+        </div>
 
-    {/* Third Round */}
-    <div className="flex gap-4 justify-center w-full">
+        {/* Third Round */}
         {/* Championship */}
         <div className="w-1/2">
-        <h2 className="text-center font-bold mb-2">Championship</h2>
-        <div className="mb-4 text-center text-gray-500 font-medium">TBD</div>
+            <h2 className="text-center font-bold mb-2">Championship</h2>
+            <div className="text-center text-gray-500 font-medium">TBD</div>
         </div>
-
-        {/* Consolation Bracket */}
+            {/* Consolation Bracket */}
         <div className="w-1/2">
-        <h3 className="text-center font-semibold mb-2">3rd Place</h3>
-        <div className="text-center text-gray-500 font-medium">TBD</div>
+            <h3 className="text-center font-semibold mb-2">3rd Place</h3>
+            <div className="text-center text-gray-500 font-medium">TBD</div>
         </div>
-    </div>
     </div>
 
   );

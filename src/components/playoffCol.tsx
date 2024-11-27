@@ -21,57 +21,79 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
     return a.ovrRank - b.ovrRank; // Sort in ascending order
   });
 
-  return (
-    <div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {hasOvrRank && <TableHead>Rank</TableHead>}
-            <TableHead>Team</TableHead>
-            <TableHead>Points</TableHead>
-            <TableHead>Eliminated</TableHead>
-            <TableHead>Competing for 3rd</TableHead>
+  const renderTable = () => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          {hasOvrRank && <TableHead>Rank</TableHead>}
+          <TableHead>Team</TableHead>
+          <TableHead>Points</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sortedStandings.map((standing: PlayoffUser, index: number) => (
+          <TableRow
+            key={index}
+            className={
+              standing.eliminated || standing.competing_for_third
+                ? 'bg-red-200' // Highlight eliminated or competing for 3rd in red
+                : 'bg-gray-200'
+            }
+          >
+            {standing.ovrRank !== undefined && standing.ovrRank !== null && (
+              <TableCell>{standing.ovrRank}</TableCell>
+            )}
+            <TableCell>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <img
+                  src={standing.userAvatar || 'https://sleepercdn.com/avatars/cc12ec49965eb7856f84d71cf85306af'}
+                  alt={`${standing.displayName}'s avatar`}
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: '50%',
+                    marginRight: '10px',
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      'https://sleepercdn.com/avatars/cc12ec49965eb7856f84d71cf85306af'; // Placeholder
+                  }}
+                />
+                {standing.displayName}
+              </div>
+            </TableCell>
+            <TableCell>{standing.totalPoints}</TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sortedStandings.map((standing: PlayoffUser, index: number) => (
-            <TableRow
-              key={index}
-              className={
-                standing.eliminated || standing.competing_for_third
-                  ? 'bg-red-200' // Highlight eliminated or competing for 3rd in red
-                  : 'bg-gray-200'
-              }
-            >
-              {standing.ovrRank !== undefined && standing.ovrRank !== null && (
-                <TableCell>{standing.ovrRank}</TableCell>
-              )}
-              <TableCell>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img
-                    src={standing.userAvatar || 'https://sleepercdn.com/avatars/cc12ec49965eb7856f84d71cf85306af'}
-                    alt={`${standing.displayName}'s avatar`}
-                    style={{
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '50%',
-                      marginRight: '10px',
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        'https://sleepercdn.com/avatars/cc12ec49965eb7856f84d71cf85306af'; // Placeholder
-                    }}
-                  />
-                  {standing.displayName}
-                </div>
-              </TableCell>
-              <TableCell>{standing.totalPoints}</TableCell>
-              <TableCell>{standing.eliminated ? 'Yes' : 'No'}</TableCell>
-              <TableCell>{standing.competing_for_third ? 'Yes' : 'No'}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+        ))}
+      </TableBody>
+    </Table>
+  );
+
+  return (
+    <div className="flex gap-4 mt-10">
+      {/* First Round */}
+      <div className="w-1/3">
+        <h2 className="text-center font-bold mb-2">Quarter Finals</h2>
+        {renderTable()}
+      </div>
+
+        {/* Second Round */}
+        <div className="w-1/3">
+        <h2 className="text-center font-bold mb-2">Semi Finals</h2>
+        <div className="text-center text-gray-500 font-medium">TBD</div>
+        </div>
+
+        {/* Third Round */}
+        <div className="w-1/3">
+        <h2 className="text-center font-bold mb-2">Championship</h2>
+        {/* Championship Placeholder */}
+        <div className="mb-4 text-center text-gray-500 font-medium">TBD</div>
+
+        {/* Consolation Bracket Placeholder */}
+        <h3 className="text-center font-semibold mb-2">3rd Place</h3>
+        <div className="text-center text-gray-500 font-medium">TBD</div>
+        </div>
+
     </div>
   );
 };

@@ -6,9 +6,12 @@ import {
 } from '@/components/ui/accordion';
 import Header from '@/components/header';
 
+import styles from './page.module.scss';
+import { SegmentedControl } from '@blueprintjs/core';
+
 export default function Home() {
   return (
-    <div>
+    <div className={styles.segmentedControl}>
       <Header />
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">

@@ -10,6 +10,13 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '@/components/ui/accordion';
+
 // Helper function to get Tailwind classes based on player position
 const getPositionClass = (position: string) => {
     switch (position) {
@@ -53,40 +60,39 @@ const RosterCol: React.FC<{ users: UserAndRoster[] }> = ({ users }) => {
     }, {} as Record<string, typeof sortedPlayers>);
 
     return (
-        <div>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Player Name</TableHead>
-                        <TableHead>Position</TableHead>
-                        <TableHead>Team</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {Object.entries(groupedPlayers).map(([displayName, players]) => (
-                        <React.Fragment key={displayName}>
-                            <TableRow>
-                                <TableCell colSpan={3} className="font-bold text-lg">
-                                    {displayName} {/* User Header */}
-                                </TableCell>
-                            </TableRow>
-                            {players.map((player, index) => (
-                                <TableRow
-                                    key={`${player.playerId}-${index}`} // Unique key for each row
-                                    className={getPositionClass(player.position)} // Apply position class
-                                >
-                                    <TableCell>{player.playerName}</TableCell>
-                                    <TableCell>{player.position}</TableCell>
-                                    <TableCell>{player.team}</TableCell>
+        <Accordion type="single" collapsible>
+            {Object.entries(groupedPlayers).map(([displayName, players]) => (
+                <AccordionItem key={displayName} value={displayName}>
+                    <AccordionTrigger>
+                        <strong>{displayName}</strong>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Player Name</TableHead>
+                                    <TableHead>Position</TableHead>
+                                    <TableHead>Team</TableHead>
                                 </TableRow>
-                            ))}
-                        </React.Fragment>
-                    ))}
-                </TableBody>
-            </Table>
-        </div>
+                            </TableHeader>
+                            <TableBody>
+                                {players.map((player, index) => (
+                                    <TableRow
+                                        key={`${player.playerId}-${index}`} // Unique key for each row
+                                        className={getPositionClass(player.position)} // Apply position class
+                                    >
+                                        <TableCell>{player.playerName}</TableCell>
+                                        <TableCell>{player.position}</TableCell>
+                                        <TableCell>{player.team}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </AccordionContent>
+                </AccordionItem>
+            ))}
+        </Accordion>
     );
 };
 
 export default RosterCol;
-

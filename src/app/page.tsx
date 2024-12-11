@@ -10,7 +10,7 @@ import StandingCol from '../components/standingCol';
 import PlayoffCol from '../components/playoffCol'; // Import PlayoffCol
 
 import { fetchAllUsers } from '../api/users';
-import { fetchAllPlayoffUsers } from '../api/playoffs'; // Import Playoffs API
+import { fetchAllPlayoffUsers, fetchPlayoffUsersByWeek } from '../api/playoffs'; // Import Playoffs API
 
 import { User } from '../types/types';
 import { PlayoffUser } from '../types/types'; // Import PlayoffUser type
@@ -62,7 +62,7 @@ export default function Home() {
   return (
     <div className="items-center">
       <Header />
-      <h1 className="text-center" style={{ fontSize: '26px' }}>
+      <h1 className="text-center" style={{ fontSize: '26px', marginBottom: '10px'}}>
         {view}
       </h1>
       <div className={styles.segmentedControl}>

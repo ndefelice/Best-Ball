@@ -16,6 +16,7 @@ export type PlayoffUser = {
   leagueId: string;
   userId: string;
   roster: string[];
+  week: number;
   totalPoints: number;
   regSznPoints: number;
   eliminated: boolean;

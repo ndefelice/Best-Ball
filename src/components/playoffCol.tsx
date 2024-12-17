@@ -11,18 +11,26 @@ import {
 } from '@/components/ui/table';
 
 const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
-  // Check if there is at least one ovrRank in the standings
-  const hasOvrRank = standings.some((standing) => standing.ovrRank !== null);
+  // Filtered standings for each round
+  const quarterFinalsUsers = standings.filter((standing) => standing.week === 1);
+  const semiFinalsUsers = standings.filter((standing) => standing.week === 2);
+  const championshipUsers = standings.filter(
+    (standing) => standing.week === 3 && !standing.competing_for_third
+  );
+  const thirdPlaceUsers = standings.filter(
+    (standing) => standing.week === 3 && standing.competing_for_third
+  );
 
-  // Sort standings by ovrRank (ascending order), handling undefined or null values
-  const sortedStandings = standings.sort((a, b) => {
-    if (a.ovrRank === undefined || a.ovrRank === null) return 1; // Place null/undefined at the end
-    if (b.ovrRank === undefined || b.ovrRank === null) return -1;
-    return a.ovrRank - b.ovrRank; // Sort in ascending order
-  });
+  // Sort each filtered array by totalPoints (descending order)
+  const sortByPoints = (users: PlayoffUser[]) =>
+    users.sort((a, b) => {
+      if (a.totalPoints === undefined || a.totalPoints === null) return 1; // Place null/undefined at the end
+      if (b.totalPoints === undefined || b.totalPoints === null) return -1;
+      return b.totalPoints - a.totalPoints; // Sort in descending order
+    });
 
-  const renderTable = () => (
-    <Table>
+  const renderTable = (users: PlayoffUser[]) => (
+    <Table className="mb-10">
       <TableHeader>
         <TableRow>
           <TableHead>Team</TableHead>
@@ -30,13 +38,15 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {sortedStandings.map((standing: PlayoffUser, index: number) => (
+        {sortByPoints(users).map((standing: PlayoffUser, index: number) => (
           <TableRow
             key={index}
             className={
-              standing.eliminated || standing.competing_for_third
-                ? 'bg-red-200' // Highlight eliminated or competing for 3rd in red
-                : 'bg-gray-200'
+              standing.eliminated
+                ? 'bg-red-200' // Highlight eliminated teams in red
+                : standing.competing_for_third
+                ? 'bg-yellow-200' // Highlight teams competing for 3rd in yellow
+                : 'bg-green-200' // Highlight active teams still in the playoffs in green
             }
           >
             <TableCell>
@@ -67,31 +77,31 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
 
   return (
     <div className="flex flex-col items-center gap-4 mt-10">
-        {/* First Round */}
-        <div className="w-full">
-            <h2 className="text-center font-bold mb-2">Quarter Finals</h2>
-            {renderTable()}
-        </div>
+      {/* Championship */}
+      <div className="w-1/2">
+        <h2 className="text-center font-bold mb-4">Championship</h2>
+        <h1 className="text-center font-bold mb-2 text-gray-500">TBD</h1>
 
-        {/* Second Round */}
-        <div className="w-full">
-            <h2 className="text-center font-bold mb-2">Semi Finals</h2>
-            <div className="text-center text-gray-500 font-medium">TBD</div>
-        </div>
+      </div>
 
-        {/* Third Round */}
-        {/* Championship */}
-        <div className="w-1/2">
-            <h2 className="text-center font-bold mb-2">Championship</h2>
-            <div className="text-center text-gray-500 font-medium">TBD</div>
-        </div>
-            {/* Consolation Bracket */}
-        <div className="w-1/2">
-            <h3 className="text-center font-semibold mb-2">3rd Place</h3>
-            <div className="text-center text-gray-500 font-medium">TBD</div>
-        </div>
+      {/* Consolation Bracket */}
+      <div className="w-1/2">
+        <h3 className="text-center font-semibold mb-4">3rd Place</h3>
+        <h1 className="text-center font-bold mb-8 text-gray-500">TBD</h1>
+      </div>
+
+      {/* Semi Finals */}
+      <div className="w-full">
+        <h2 className="text-center font-bold mb-2">Semi Finals</h2>
+        {renderTable(semiFinalsUsers)}
+      </div>
+
+      {/* Quarter Finals */}
+      <div className="w-full">
+        <h2 className="text-center font-bold mb-2">Quarter Finals</h2>
+        {renderTable(quarterFinalsUsers)}
+      </div>
     </div>
-
   );
 };
 

@@ -78,13 +78,13 @@ const PlayoffCol: React.FC<{ standings: PlayoffUser[] }> = ({ standings }) => {
   return (
     <div className="flex flex-col items-center gap-4 mt-10">
       {/* Championship */}
-      <div className="w-1/2">
+      <div className="w-full">
         <h2 className="text-center font-bold mb-4">Championship</h2>
         {renderTable(championshipUsers)}
       </div>
 
       {/* Consolation Bracket */}
-      <div className="w-1/2">
+      <div className="w-full">
         <h3 className="text-center font-semibold mb-4">3rd Place</h3>
         {renderTable(thirdPlaceUsers)}
       </div>

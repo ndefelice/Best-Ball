@@ -19,26 +19,23 @@ export default function Home() {
             <strong>Overview</strong>
           </AccordionTrigger>
           <AccordionContent>
-            Best ball is a format where the best possible lineup is
-            automatically selected for each team. At the end of the week, the
-            highest-scoring players are automatically inserted into the starting
-            lineup spots.
+            In best ball, teams after the draft are final! There is NO 
+            trading and NO weekly waivers (aka. NO adding or dropping players).
           </AccordionContent>
           <AccordionContent>
-            There is no roster management in this format. That means the team a
-            manager drafts will be their team for the entire season. You
-            don&apos;t have to worry about weekly waivers, trades, or setting
-            lineups.
+            Lineups don&apos;t need to be set going forward. Sleeper will
+            automatically insert your top scoring players into your lineup for each week.
           </AccordionContent>
           <AccordionContent>
-            There is also no weekly matchups. The standings for each league are
+            There are also NO weekly matchups. The standings for each league are
             determined by your team&apos;s total points scored (PF).
           </AccordionContent>
           <AccordionContent>
-            In this torunament, teams are randomly placed in individual, 12 team
+            In this torunament, 48 teams are randomly placed into 4 separate, 12 team
             leagues on Sleeper. At the end of the regular season (14 weeks), the
-            top 2 scoring teams from each league merge for a playoff and compete
-            for 1st, 2nd, and 3rd place payouts.
+            top 3 scoring teams from each league merge for a playoff. The bottom half (6) teams
+            in points for Weeks 15 and 16 are eliminated from the playoffs. In Week 17, 
+            championship week, the final 3 teams compete for 1st, 2nd, and 3rd place payouts. 
           </AccordionContent>
         </AccordionItem>
 
@@ -48,17 +45,17 @@ export default function Home() {
           </AccordionTrigger>
           <AccordionContent>
             This league is a <strong>$25 buy-in</strong>. If you don&apos;t pay
-            by Week 4 of the NFL season (September 26th), you will be eliminated
+            by Week 4 of the NFL season (September 25th), you will be eliminated
             from the tournament.
           </AccordionContent>
           <AccordionContent>
-            • <strong>1st place:</strong> 70% of the prize pool
+            • <strong>1st place:</strong> $720 (60% of the prize pool)
           </AccordionContent>
           <AccordionContent>
-            • <strong>2nd place:</strong> 20% of the prize pool
+            • <strong>2nd place:</strong> $360 (30% of the prize pool)
           </AccordionContent>
           <AccordionContent>
-            • <strong>3rd place:</strong> 10% of the prize pool
+            • <strong>3rd place:</strong> $120 (10% of the prize pool)
           </AccordionContent>
         </AccordionItem>
 
@@ -79,7 +76,7 @@ export default function Home() {
             <strong>Playoffs:</strong> Weeks 15-17
           </AccordionContent>
           <AccordionContent>
-            <strong>Draft format:</strong> Snake Draft, 90 sec per pick
+            <strong>Draft format:</strong> Snake Draft, 60 sec per pick
           </AccordionContent>
           <AccordionContent>
             <strong>Roster spots:</strong>

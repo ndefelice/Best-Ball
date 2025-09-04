@@ -37,7 +37,7 @@ const StandingCol: React.FC<{ standings: User[] }> = ({ standings }) => {
            <TableRow
              key={index}
              className={
-               standing.leagueRank === 1 || standing.leagueRank === 2
+               standing.leagueRank === 1 || standing.leagueRank === 2 || standing.leagueRank === 3
                  ? 'bg-green-200'
                  : 'bg-gray-200'
              }

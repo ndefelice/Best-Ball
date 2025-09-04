@@ -17,6 +17,7 @@ const leagueOptions = [
   { label: 'League 1', value: LeagueID.LEAGUE_1 },
   { label: 'League 2', value: LeagueID.LEAGUE_2 },
   { label: 'League 3', value: LeagueID.LEAGUE_3 },
+  { label: 'League 4', value: LeagueID.LEAGUE_4},
 ];
 
 export default function Home() {

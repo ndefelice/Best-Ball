@@ -17,9 +17,10 @@ export const fetchUsersByLeagueID = async (leagueId) => {
 };
 
 export const fetchUserByUserId = async (userId) => {
-    const response = await fetch(`${API_URL}/users?userId=${userId}`);
-    if (!response.ok) {
-        throw new Error('Failed to fetch user');
-    }
-    return response.json();
+  const response = await fetch(`${API_URL}/users?userId=${userId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch user");
+  }
+  const data = await response.json();
+  return Array.isArray(data) ? data[0] : data; // ✅ unwrap array
 };

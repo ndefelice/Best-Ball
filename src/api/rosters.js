@@ -1,4 +1,4 @@
-import { fetchUsersByLeagueID } from './users'
+import { fetchUsersByLeagueID, fetchUserByUserId } from './users'
 import { fetchPlayerById } from './players'
 
 const API_URL = 'https://best-ball-api-docker.onrender.com'; // Update with your server URL if deployed
@@ -27,6 +27,30 @@ export const fetchRostersByLeagueId = async (leagueId) => {
         return usersWithDetailedRosters;
     } catch (error) {
         console.error('Error fetching league rosters with player details:', error);
+        throw error;
+    }
+};
+
+export const fetchRostersByUserId = async (userId) => {
+    try {
+        // Step 1: Fetch the user by user ID
+        const user = await fetchUserByUserId(userId);
+
+        // Step 2: Fetch detailed player information for each player in the user's roster
+        const rosterWithDetails = await Promise.all(
+            user.roster.map(async (playerId) => {
+                const playerInfo = await fetchPlayerById(playerId);
+                return playerInfo;
+            })
+        );
+
+        // Step 3: Add detailed roster to user object
+        return {
+            ...user,
+            detailedRoster: rosterWithDetails
+        };
+    } catch (error) {
+        console.error('Error fetching user roster with player details:', error);
         throw error;
     }
 };

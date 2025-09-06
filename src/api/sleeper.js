@@ -101,7 +101,7 @@ async function fetchLeagueRosters(league_id) {
         `https://api.sleeper.app/v1/league/${league_id}/rosters`,
         );
         const rosters = await response.json();
-        console.log(rosters);
+        //console.log(rosters);
         return rosters;
     } catch (error) {
         console.error('Error:', error);

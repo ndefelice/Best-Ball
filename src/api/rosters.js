@@ -1,56 +1,94 @@
-import { fetchUsersByLeagueID, fetchUserByUserId } from './users'
-import { fetchPlayerById } from './players'
+import { fetchUsersByLeagueID, fetchUserByUserId } from './users';
+import { fetchPlayerById } from './players';
+import { fetchWeeklyScoresByWeek } from './weeklyScores';
 
-const API_URL = 'https://best-ball-api-docker.onrender.com'; // Update with your server URL if deployed
+const MAX_WEEKS = 17;
 
-export const fetchRostersByLeagueId = async (leagueId) => {
-    try {
-        // Step 1: Fetch users with rosters by league ID
-        const users = await fetchUsersByLeagueID(leagueId);
-
-        // Step 2: Loop through each user to fetch detailed player information for their roster
-        const usersWithDetailedRosters = await Promise.all(users.map(async (user) => {
-            // If the user has a roster with player IDs, fetch detailed info for each player
-            const rosterWithDetails = await Promise.all(user.roster.map(async (playerId) => {
-                const playerInfo = await fetchPlayerById(playerId);
-                return playerInfo; // Return detailed player info
-            }));
-
-            // Add the detailed roster information to the user object
-            return {
-                ...user,
-                detailedRoster: rosterWithDetails // New field with detailed player info
-            };
-        }));
-
-        // Return the users with their detailed rosters
-        return usersWithDetailedRosters;
-    } catch (error) {
-        console.error('Error fetching league rosters with player details:', error);
-        throw error;
-    }
+// Map weekly scores to top-level week1, week2, etc.
+const mapWeeklyPoints = (weeklyScores, playerId) => {
+  const points = {};
+  weeklyScores.forEach(score => {
+    points[`week${score.week}`] = score.players_points[playerId] ?? 0;
+  });
+  return points;
 };
 
-export const fetchRostersByUserId = async (userId) => {
-    try {
-        // Step 1: Fetch the user by user ID
-        const user = await fetchUserByUserId(userId);
+// Fetch rosters by league ID (flattened)
+export const fetchRostersByLeagueId = async (leagueId) => {
+  try {
+    const users = await fetchUsersByLeagueID(leagueId);
 
-        // Step 2: Fetch detailed player information for each player in the user's roster
+    const usersWithDetailedRosters = await Promise.all(
+      users.map(async (user) => {
         const rosterWithDetails = await Promise.all(
-            user.roster.map(async (playerId) => {
-                const playerInfo = await fetchPlayerById(playerId);
-                return playerInfo;
-            })
+          user.roster.map(async (playerId) => {
+            const playerInfo = await fetchPlayerById(playerId);
+
+            const weeklyScores = await Promise.all(
+              Array.from({ length: MAX_WEEKS }, (_, i) =>
+                fetchWeeklyScoresByWeek(leagueId, user.rosterId, i + 1)
+              )
+            );
+
+            const weeklyPoints = mapWeeklyPoints(
+              weeklyScores.flat(),
+              playerId
+            );
+
+            return {
+              ...playerInfo,
+              ...weeklyPoints, // week1, week2, etc.
+            };
+          })
         );
 
-        // Step 3: Add detailed roster to user object
         return {
-            ...user,
-            detailedRoster: rosterWithDetails
+          ...user,
+          detailedRoster: rosterWithDetails, // ✅ flat array, no extra nesting
         };
-    } catch (error) {
-        console.error('Error fetching user roster with player details:', error);
-        throw error;
-    }
+      })
+    );
+
+    return usersWithDetailedRosters;
+  } catch (error) {
+    console.error('Error fetching league rosters with weekly points:', error);
+    throw error;
+  }
+};
+
+// Fetch roster by single user ID (flattened)
+export const fetchRostersByUserId = async (userId) => {
+  try {
+    const user = await fetchUserByUserId(userId);
+
+    const rosterWithDetails = await Promise.all(
+      user.roster.map(async (playerId) => {
+        const playerInfo = await fetchPlayerById(playerId);
+
+        const weeklyScores = await Promise.all(
+          Array.from({ length: MAX_WEEKS }, (_, i) =>
+            fetchWeeklyScoresByWeek(user.leagueId, user.rosterId, i + 1)
+          )
+        );
+
+        const weeklyPoints = mapWeeklyPoints(
+          weeklyScores.flat(),
+          playerId
+        );
+
+        return {
+          ...playerInfo,
+          ...weeklyPoints, // week1, week2, etc.
+        };
+      })
+    );
+
+    return {
+      ...user,
+      detailedRoster: rosterWithDetails, // ✅ flat array, no extra nesting
+    };
+  } catch (error) {
+    console.error('Error fetching user roster with weekly points:', error);
+    throw error;
+  }
 };

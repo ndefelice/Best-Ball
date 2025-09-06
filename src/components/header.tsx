@@ -21,17 +21,19 @@ const Header: React.FC = () => {
               <NavigationMenuLink
                 className={`${navigationMenuTriggerStyle()} text-lg`}
               >
-                Home
+                Standings
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-          {/* <NavigationMenuItem>
-                        <Link href="/draft" legacyBehavior passHref>
-                            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-lg`}>
-                                Draft
-                            </NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem> */}
+          <NavigationMenuItem>
+            <Link href="/weeklyStandings" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={`${navigationMenuTriggerStyle()} text-lg`}
+              >
+                Weekly Leaders
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
           <NavigationMenuItem>
             <Link href="/leagues" legacyBehavior passHref>
               <NavigationMenuLink

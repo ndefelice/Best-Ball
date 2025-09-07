@@ -19,7 +19,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-// Tailwind classes based on player position
+import { Loader2 } from 'lucide-react';
+
 const getPositionClass = (position: string) => {
   switch (position) {
     case 'RB': return 'bg-green-200';
@@ -36,55 +37,23 @@ interface Player {
   team?: string;
   position: string;
   status: string;
-  week1?: number;
-  week2?: number;
-  week3?: number;
-  week4?: number;
-  week5?: number;
-  week6?: number;
-  week7?: number;
-  week8?: number;
-  week9?: number;
-  week10?: number;
-  week11?: number;
-  week12?: number;
-  week13?: number;
-  week14?: number;
-  week15?: number;
-  week16?: number;
-  week17?: number;
+  [key: string]: any;
 }
 
 interface RosterModalProps {
-  user: UserAndRoster;
+  user: UserAndRoster | null;
   open: boolean;
+  loading: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-const RosterModal: React.FC<RosterModalProps> = ({ user, open, onOpenChange }) => {
-  // Flatten detailedRoster
-  const flattenedRoster: Player[] = (user.detailedRoster ?? []).map((item) => ({
-    ...(item as any)[0], // extract nested player
-    week1: item.week1,
-    week2: item.week2,
-    week3: item.week3,
-    week4: item.week4,
-    week5: item.week5,
-    week6: item.week6,
-    week7: item.week7,
-    week8: item.week8,
-    week9: item.week9,
-    week10: item.week10,
-    week11: item.week11,
-    week12: item.week12,
-    week13: item.week13,
-    week14: item.week14,
-    week15: item.week15,
-    week16: item.week16,
-    week17: item.week17,
-  }));
+const RosterModal: React.FC<RosterModalProps> = ({ user, open, loading, onOpenChange }) => {
+  const flattenedRoster: Player[] =
+    user?.detailedRoster?.map((item: any) => ({
+      ...(item as any)[0],
+      ...item, // keep week fields
+    })) ?? [];
 
-  // Sort players by position (optional)
   const sortedPlayers = flattenedRoster.sort((a, b) =>
     (a.position ?? '').localeCompare(b.position ?? '')
   );
@@ -93,29 +62,35 @@ const RosterModal: React.FC<RosterModalProps> = ({ user, open, onOpenChange }) =
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{user.displayName}'s Roster</DialogTitle>
+          <DialogTitle>{user?.displayName ?? 'Roster'}</DialogTitle>
           <DialogDescription asChild>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Player Name</TableHead>
-                  <TableHead>Position</TableHead>
-                  <TableHead>Team</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {sortedPlayers.map(player => (
-                  <TableRow
-                    key={player.playerId}
-                    className={getPositionClass(player.position)}
-                  >
-                    <TableCell>{player.playerName}</TableCell>
-                    <TableCell>{player.position}</TableCell>
-                    <TableCell>{player.team}</TableCell>
+            {loading ? (
+              <div className="flex justify-center items-center py-10">
+                <Loader2 className="animate-spin h-10 w-10 text-gray-600" />
+              </div>
+            ) : user ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Player Name</TableHead>
+                    <TableHead>Position</TableHead>
+                    <TableHead>Team</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {sortedPlayers.map((player) => (
+                    <TableRow
+                      key={player.playerId}
+                      className={getPositionClass(player.position)}
+                    >
+                      <TableCell>{player.playerName}</TableCell>
+                      <TableCell>{player.position}</TableCell>
+                      <TableCell>{player.team}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : null}
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

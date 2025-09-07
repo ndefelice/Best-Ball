@@ -78,6 +78,7 @@ export type UserAndRoster = {
   totalPoints: number;
   rosterId: string;
   detailedRoster: Array<{
+    map(arg0: (player: any) => any): any;
     playerId: string;
     playerName: string;
     team?: string;

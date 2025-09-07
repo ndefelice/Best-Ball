@@ -21,7 +21,7 @@ const Header: React.FC = () => {
               <NavigationMenuLink
                 className={`${navigationMenuTriggerStyle()} text-lg`}
               >
-                Standings
+                Home
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
               <NavigationMenuLink
                 className={`${navigationMenuTriggerStyle()} text-lg`}
               >
-                Weekly Leaders
+                Weekly Scores
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>

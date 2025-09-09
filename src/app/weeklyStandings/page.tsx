@@ -2,6 +2,7 @@
 import styles from './page.module.scss';
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
+import PointTooltip from '@/components/pointToolTip';
 import WeeklyStandingCol from '../../components/weeklyStandingCol';
 import { User } from '../../types/types';
 import { fetchAllUsers } from '../../api/users';
@@ -36,10 +37,20 @@ export default function WeeklyStandings() {
   return (
     <div className="items-center">
       <Header />
-      <h1 className="text-center" style={{ fontSize: '26px', marginBottom: '10px'}}>
-        Weekly Standings - Week {selectedWeek}
-      </h1>
-
+      <div className="flex items-center justify-center gap-2 mb-8">
+        <h1 className="text-center" style={{ fontSize: '26px'}}>
+          Week {selectedWeek} Standings
+        </h1>
+        <PointTooltip
+          message={
+            <>
+              Weekly standings are updated automatically:
+              <br />• Thu–Mon: 9 AM, 1 PM, 4 PM, 8 PM ET
+              <br />• Tue: 5 AM, 8 AM ET
+            </>
+          }
+        />
+      </div>
       <div className="text-center mb-4">
         <label htmlFor="weekSelector" className="mr-2 font-medium">Select Week:</label>
         <select

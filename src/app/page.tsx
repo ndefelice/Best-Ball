@@ -8,6 +8,7 @@ import { SegmentedControl } from '@blueprintjs/core';
 import Header from '../components/header';
 import StandingCol from '../components/standingCol';
 import PlayoffCol from '../components/playoffCol'; // Import PlayoffCol
+import PointTooltip from '@/components/pointToolTip';
 
 import { fetchAllUsers } from '../api/users';
 import { fetchAllPlayoffUsers, fetchPlayoffUsersByWeek } from '../api/playoffs'; // Import Playoffs API
@@ -61,10 +62,19 @@ export default function Home() {
 
   return (
     <div className="items-center">
-      <Header />
-      <h1 className="text-center" style={{ fontSize: '26px', marginBottom: '10px'}}>
-        {view}
-      </h1>
+      <Header/>
+      <div className="flex items-center justify-center gap-2 mb-3">
+        <h1 className="text-center text-[26px]">{view}</h1>
+        <PointTooltip
+          message={
+            <>
+              Standings are updated automatically:
+              <br />• Thu–Mon: 9 AM, 1 PM, 4 PM, 8 PM ET
+              <br />• Tue: 5 AM, 8 AM ET
+            </>
+          }
+        />
+      </div>
       <div className={styles.segmentedControl}>
         <SegmentedControl
           fill
